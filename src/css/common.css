@@ -29,3 +29,31 @@ margin-top: 400px;
   letter-spacing: 0.04em;
   cursor: pointer;
 }
+.field{
+  display: inline-grid;
+  justify-items: center;
+
+}
+.timer{
+  display: flex;
+  gap: 15px;
+}
+.label{
+  text-transform:uppercase;
+}
+.value{
+  font-weight: 600;
+  font-size: xx-large;
+}
+.form{
+  display: flex;
+  gap:10px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+.js-container{
+  max-width: 600px;
+
+}
