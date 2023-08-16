@@ -1,7 +1,6 @@
-// Описаний в документації
+
 import flatpickr from "flatpickr";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// Додатковий імпорт стилів
 import "flatpickr/dist/flatpickr.min.css";
 const element_2 = {
     inputDate: document.querySelector('input#datetime-picker'),
@@ -14,7 +13,6 @@ const element_2 = {
 
 element_2.btnStart.addEventListener('click', handlerBtnStart);
 element_2.btnStart.disabled = true;
-const currentData = Date.now();
 let endDate = null;
 const options = {
     enableTime: true,
@@ -23,7 +21,7 @@ const options = {
     minuteIncrement: 1,
     onClose(selectedDates) {
         endDate = Number(selectedDates[0]);
-        if (endDate < currentData) {
+        if (endDate < Date.now()) {
             Notify.failure('Please choose a date in the future');
         }
         else {
@@ -31,12 +29,29 @@ const options = {
         }
     },
 };
+let calendar = flatpickr(element_2.inputDate, options);
 
-flatpickr(element_2.inputDate, options);
+function handlerBtnStart(e) {
+
+    calendar.destroy(element_2.inputDate, options);
+    element_2.btnStart.disabled = true;
+    const startTimer = setInterval(() => {
+        const startDate = Date.now();
+        const ms = endDate - startDate;
+        const remainingTime = convertMs(ms);
+        updateClockface(remainingTime);
+    }, 1000);
+
+    setTimeout(() => {
+        Notify.success('Start sale)');
+        clearInterval(startTimer)
+    }, endDate - Date.now());
+
+
+};
 
 function addLeadingZero(value) {
     return String(value).padStart(2, '0');
-
 };
 
 function convertMs(ms) {
@@ -51,21 +66,6 @@ function convertMs(ms) {
     const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
 
     return { days, hours, minutes, seconds };
-};
-
-function handlerBtnStart(e) {
-    const startTimer = setInterval(() => {
-        const startDate = Date.now();
-        const ms = endDate - startDate;
-        const remainingTime = convertMs(ms);
-        updateClockface(remainingTime)
-    }, 1000);
-
-    setTimeout(()=>{
-        clearInterval(startTimer)
-    },endDate-Date.now());
-    
-    element_2.btnStart.disabled = true;
 };
 
 function updateClockface({ days, hours, minutes, seconds }) {
