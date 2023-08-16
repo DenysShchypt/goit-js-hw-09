@@ -54,8 +54,6 @@ function convertMs(ms) {
 };
 
 function handlerBtnStart(e) {
-    
-    
     const startTimer = setInterval(() => {
         const startDate = Date.now();
         const ms = endDate - startDate;
@@ -66,6 +64,7 @@ function handlerBtnStart(e) {
     setTimeout(()=>{
         clearInterval(startTimer)
     },endDate-Date.now());
+    
     element_2.btnStart.disabled = true;
 };
 
