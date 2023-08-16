@@ -15,7 +15,6 @@ const element_2 = {
 element_2.btnStart.addEventListener('click', handlerBtnStart);
 element_2.btnStart.disabled = true;
 const currentData = Date.now();
-
 let endDate = null;
 const options = {
     enableTime: true,
@@ -55,12 +54,18 @@ function convertMs(ms) {
 };
 
 function handlerBtnStart(e) {
+    
+    
     const startTimer = setInterval(() => {
         const startDate = Date.now();
         const ms = endDate - startDate;
         const remainingTime = convertMs(ms);
         updateClockface(remainingTime)
     }, 1000);
+
+    setTimeout(()=>{
+        clearInterval(startTimer)
+    },endDate-Date.now());
     element_2.btnStart.disabled = true;
 };
 
